@@ -1,3 +1,5 @@
+import _ from 'lodash'
+    
 export default class Component {
 
     constructor() {
@@ -7,6 +9,10 @@ export default class Component {
         this.views = []
     }
 
+    /**
+     * Set state
+     * @param {*} param0 
+     */
     setState({
         state = []
     }) {
@@ -16,6 +22,10 @@ export default class Component {
         this._onSetState()
     }
 
+    /**
+     * Add item to state, id is set automatically
+     * @param {Object} item 
+     */
     addToState(item) {
         let s = [...this.state]
         item.id = this.state.length + 1
@@ -23,14 +33,36 @@ export default class Component {
         this.setState({state: s})
     }
 
-    didItemsChange(itemA, itemB) {
-        return JSON.stringify(itemA) != JSON.stringify(itemB);
+    /**
+     * Remove item from state by id
+     */
+    removeFromStateById(id) {
+        let c = [...this.state]
+
+        c.forEach((item,index) => {
+            if(item.id == id) {
+                    c.splice(index,1)
+            }
+        })
+
+        this.setState({state: c})
     }
 
-    removeView(index) {
-        
+    /**
+     * Remove item from state by index
+     * @param {integer} index 
+     */
+    removeFromState(index) {
+        let s = [...this.state];
+
+        s.splice(index, 1)
+        this.setState({state: s})
     }
 
+
+    /**
+     * Creates component, do not call it directly
+     */
     create() {
         let htmlEl = document.querySelector(this.el)
 
@@ -41,8 +73,6 @@ export default class Component {
         this.views.forEach((view, index) => {
             let stateItems = this.state.filter(s => s.id == view.id)
             
-            console.log('view', view, index, stateItems.length)
-
             if(stateItems == 0) {
                 toBeRemoved.push(view.id)
             }
@@ -66,14 +96,9 @@ export default class Component {
 
             // do we have view for that item?
             if (typeof v != 'undefined') {
-                // did state changed for that item?
-                // if not then do not update it, leave it as it is
-                if(this.didItemsChange(item, this.prevState[index])) {
-                    v.view.data = item
-
-                    v.view.component = this // should be that anyway
-                    v.view.update()
-                }
+                v.view.data = item
+                v.view.update()
+                v.view.bindEvents()
             } else { // view not present for that item so create new one
                 let v = new this.view
 
@@ -97,6 +122,9 @@ export default class Component {
         })
     }
 
+    /**
+     * Called when state is changed
+     */
     _onSetState() {
         this.create()
     }

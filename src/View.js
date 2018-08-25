@@ -3,20 +3,31 @@ export default class View {
         this.component = null
         this.data = null
         this.el = null
+
+        this.forms = []
     }
 
+    /**
+     * Return HTML template
+     */
     template() {
         return '[View]'
     }
 
+    /**
+     * 
+     * @param {*} form 
+     */
     _handleFormSubmit(form) {
         this.onFormSubmit(form)
     }
 
+    /**
+     * 
+     * @param {*} button 
+     */
     _handleButtonClick(button) {
-  
-            this.onButtonClick(button)
-    
+        this.onButtonClick(button)
     }
 
     /**
@@ -37,6 +48,10 @@ export default class View {
 
     }
 
+    /**
+     * Bind events for buttons and forms so they can be handled 
+     * with onFormSubmit and onButtonClick
+     */
     bindEvents() {
         let forms = this.el.getElementsByTagName("form")
         let buttons = this.el.getElementsByTagName("button")
@@ -44,29 +59,35 @@ export default class View {
         for (let i = 0; i < forms.length; i++) {
             let form = forms[i]
 
-            form.onsubmit = (ev) => {
-              
-                ev.preventDefault()
+            this.forms [form.name] = form
 
-                this._handleFormSubmit(form)
-            }
+            form.addEventListener("submit", (ev) => {
+                ev.preventDefault()
+                    this._handleFormSubmit(form)
+            })
         }
 
       
         for (let i = 0; i < buttons.length; i++) {
             let btn = buttons[i]
 
-            if(btn.type != 'submit' || btn.parentNode.nodeName != "FORM") {
-                btn.onclick = (ev) => {
-                    ev.preventDefault()
+            if(btn.type != 'submit') {
+               
+             
 
-                    this._handleButtonClick(btn)
-                }
+                    btn.addEventListener("click", () => {
+                        this._handleButtonClick(btn)
+                    })
+                   
+               
             }
         }
        
     }
 
+    /**
+     * Create element for that view
+     */
     create() {
 
         let e = document.createElement('div')
@@ -79,6 +100,9 @@ export default class View {
         return this.el
     }
 
+    /**
+     * Update element
+     */
     update() {
         this.el.innerHTML = this.template()
     }

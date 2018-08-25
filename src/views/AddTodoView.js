@@ -12,6 +12,19 @@ export default class AddTodoView extends View {
             viewLib.getComponent('todo').setState({state:[]})
             alert('Removed')
         }
+        else if(button.name == 'resetAll') {
+            
+            let state = viewLib.getComponent('todo').state;
+
+            let newState = [...state];
+
+            newState.forEach(item => {
+                item.title = this.forms['add-todo'].task.value
+            })
+
+            viewLib.getComponent('todo').setState({state: newState})
+            
+        }
     }
     
 
@@ -35,6 +48,8 @@ export default class AddTodoView extends View {
             </form>
                         
                 <button name='removeAll' type='button' class='btn btn-outline-dark mt-3'>Remove All</button>
+                <button name='resetAll' type='button' class='btn btn-outline-dark mt-3'>Reset Titles</button>
+
 
         `
     }
