@@ -23,7 +23,7 @@ export default class Component {
         this.setState({state: s})
     }
 
-    didStateChange(itemA, itemB) {
+    didItemsChange(itemA, itemB) {
         return JSON.stringify(itemA) != JSON.stringify(itemB);
     }
 
@@ -38,8 +38,9 @@ export default class Component {
             if (typeof v != 'undefined') {
                 // did state changed for that item?
                 // if not then do not update it, leave it as it is
-                if(this.didStateChange(item, this.prevState[index])) {
+                if(this.didItemsChange(item, this.prevState[index])) {
                     v.view.data = item
+
                     v.view.component = this // should be that anyway
                     v.view.update()
                 }

@@ -14,7 +14,9 @@ export default class View {
     }
 
     _handleButtonClick(button) {
-        this.onButtonClick(button)
+  
+            this.onButtonClick(button)
+    
     }
 
     /**
@@ -43,21 +45,26 @@ export default class View {
             let form = forms[i]
 
             form.onsubmit = (ev) => {
+              
                 ev.preventDefault()
 
                 this._handleFormSubmit(form)
             }
         }
 
+      
         for (let i = 0; i < buttons.length; i++) {
-            let btn = forms[i]
+            let btn = buttons[i]
 
-            btn.onsubmit = (ev) => {
-                ev.preventDefault()
+            if(btn.type != 'submit' || btn.parentNode.nodeName != "FORM") {
+                btn.onclick = (ev) => {
+                    ev.preventDefault()
 
-                this._handleFormSubmit(btn)
+                    this._handleButtonClick(btn)
+                }
             }
         }
+       
     }
 
     create() {

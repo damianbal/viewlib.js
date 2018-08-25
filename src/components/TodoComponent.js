@@ -22,11 +22,11 @@ export default class TodoComponent extends Component {
             }
         ]})
 
-        /*
+        
         setInterval(() => {
             let s = [...this.state]
             s.push({id: s.length + 1, title: "New task"})
             this.setState({state:s})
-        }, 3000 )*/
+        }, 3000 )
     }
 }

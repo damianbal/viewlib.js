@@ -6,6 +6,15 @@ export default class AddTodoView extends View {
         super()
     }
 
+    
+    onButtonClick(button) {
+        if(button.name == 'removeAll') {
+            viewLib.getComponent('todo').setState({state:[]})
+            alert('Removed')
+        }
+    }
+    
+
     onFormSubmit(form) {
         if(form.name == 'add-todo') {
            viewLib.getComponent('todo').addToState({
@@ -17,13 +26,16 @@ export default class AddTodoView extends View {
 
     template() {
         return `
-            <form method='POST' action='#' name='add-todo'>
+            <form name='add-todo'>
                 <div class='form-group'>
                     <label>Task:</label>
                     <input placeholder='Task Title...' minlength='3' name='task' class='form-control' required>
                 </div>
-                <button type='submit' class='btn btn-outline-primary'>Add</button>
+                <button class='btn btn-outline-primary'>Add</button>
             </form>
+                        
+                <button name='removeAll' type='button' class='btn btn-outline-dark'>Remove All</button>
+
         `
     }
 }

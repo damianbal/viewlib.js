@@ -9,6 +9,14 @@ ViewLib lets create your apps UI with ease, it should be great for tiny apps
 npm install viewlib
 ```
 
+## How to build?
+
+Use parcel-bundler
+
+```sh
+parcel index.html
+```
+
 ## Features
 * Create app view with ease using Components and Views
 * Basic reactivity
