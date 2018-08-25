@@ -1,0 +1,12 @@
+{
+  "name": "viewlib.js",
+  "version": "1.0.0",
+  "description": "> Tiny View library for JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "balandowski@icloud.com",
+  "license": "ISC"
+}
