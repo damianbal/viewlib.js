@@ -1,10 +1,6 @@
 import View from "../View";
 
 export default class TodoView extends View {
-    constructor() {
-        super()
-    }
-
     template() {
         if (this.data.id % 3 == 0) {
             return `I am third: ${this.data.title}`

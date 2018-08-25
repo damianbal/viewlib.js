@@ -34,7 +34,7 @@ export default class AddTodoView extends View {
                 <button class='btn btn-outline-primary'>Add</button>
             </form>
                         
-                <button name='removeAll' type='button' class='btn btn-outline-dark'>Remove All</button>
+                <button name='removeAll' type='button' class='btn btn-outline-dark mt-3'>Remove All</button>
 
         `
     }

@@ -71,6 +71,9 @@ export default class View {
 
         let e = document.createElement('div')
         e.innerHTML = this.template()
+        if(this.data) {
+            e.dataset.vlIndex = this.data.index 
+        }
         this.el = e
 
         return this.el
