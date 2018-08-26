@@ -4,6 +4,8 @@ import viewLib from "../ViewLib";
 export default class AddTodoView extends View {
     constructor() {
         super()
+
+        this.localData.task = ""
     }
 
     
@@ -19,7 +21,7 @@ export default class AddTodoView extends View {
             let newState = [...state];
 
             newState.forEach(item => {
-                item.title = this.forms['add-todo'].task.value
+                item.title = this.localData.task 
             })
 
             viewLib.getComponent('todo').setState({state: newState})
@@ -44,7 +46,7 @@ export default class AddTodoView extends View {
                     <label>Task:</label>
                     <input placeholder='Task Title...' minlength='3' name='task' class='form-control' required>
                 </div>
-                <button class='btn btn-outline-primary'>Add</button>
+                <button class='btn btn-outline-primary'>Add '<span data-model='task'></span>' to list.</button>
             </form>
                         
                 <button name='removeAll' type='button' class='btn btn-outline-dark mt-3'>Remove All</button>

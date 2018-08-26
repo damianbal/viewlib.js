@@ -2,9 +2,14 @@ export default class View {
     constructor() {
         this.component = null
         this.data = null
+        this.localData = {}
         this.el = null
 
         this.forms = []
+    }
+
+    setData(data) {
+        this.data = data
     }
 
     /**
@@ -55,6 +60,25 @@ export default class View {
     bindEvents() {
         let forms = this.el.getElementsByTagName("form")
         let buttons = this.el.getElementsByTagName("button")
+
+        let inputs = this.el.getElementsByTagName("input")
+
+        for(let i = 0; i < inputs.length; i++) {
+            let input = inputs[i]
+
+            input.onkeyup = (ev) => {
+                this.localData[input.name] = input.value
+
+                // update elements 
+                let bindings = this.el.querySelectorAll("[data-model='" + input.name + "']")
+
+                for(let i = 0; i < bindings.length; i++) {
+                    let b = bindings[i]
+
+                    b.innerHTML = this.localData[input.name]
+                }
+            }
+        }
 
         for (let i = 0; i < forms.length; i++) {
             let form = forms[i]
